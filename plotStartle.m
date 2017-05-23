@@ -1,4 +1,4 @@
-function [ output_args ] = plotStartle( data,TB,tvec,locs,theta_delta_ratio,Spec,t,fspec,bin_size)
+function [ output_args ] = plotStartle( data,TB,tvec,locs,theta_delta_ratio,Spec,t,fspec,bin_size,Fs)
 %PLOTSTARTLE Summary of this function goes here
 %   bin_size in sec; TB Time boundary
 %   Spec,t,fspec from mtspecgramc
@@ -12,8 +12,9 @@ ylim([-1 1])
 ylabel('mV')
 
 subplot(4,1,2)
-h = hist(locs,range(TB)./bin_size);        % 10 secs bin size
-bar(h)
+h = histogram(locs,'BinLimits',[0 range(TB)*Fs],'NumBins',range(TB)./bin_size);        % 10 secs bin size
+bar(h.Values)
+% xlim([0 range(TB)./bin_size])
 set(gca,'XTick',[])
 ylabel('Spikes / 10s')
 

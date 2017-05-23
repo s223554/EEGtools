@@ -45,7 +45,7 @@ Pdelta = sum(Spec(:,0.5<fspec&fspec<4).^2,2);
 theta_delta_ratio = Ptheta./Pdelta;
 tdr_all(:,i)= theta_delta_ratio;
 % plot and save
-plotStartle(tmp,TB,tvec,locs,theta_delta_ratio,Spec,t,fspec,bin_size)
+plotStartle(tmp,TB,tvec,locs,theta_delta_ratio,Spec,t,fspec,bin_size,Fs)
 print(gcf,strcat(outputdir,abfFileName, '_','startle_',num2str(i),'.tif'),'-dtiff');
 close;
 end
