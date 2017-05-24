@@ -33,13 +33,13 @@ params.tapers=[3 5];
 
 bin_size = 10;          %in sec
 
+index_save = 1;
 for i = 1:length(stim_loc)
-
 tmp = eeg_epochs(:,i);
 locs = spikeCount(tmp,minInterval,thresGain);
 % locs = spikeSeek(tmp,minInterval,thresGain);
 h = histogram(locs,'BinLimits',[0 range(TB)*Fs],'NumBins',range(TB)./bin_size);        % 10 secs bin size
-loc_all(:,i) = h.Values; 
+loc_tmp = h.Values; 
 close;
 
 %[S,f]=mtspectrumc(tmp,params);
@@ -50,10 +50,15 @@ movingwin=[5 0.5];              % moving window and moving steps
 Ptheta = sum(Spec(:,4<fspec&fspec<8).^2,2);
 Pdelta = sum(Spec(:,0.5<fspec&fspec<4).^2,2);
 theta_delta_ratio = Ptheta./Pdelta;
-tdr_all(:,i)= theta_delta_ratio;
+
 % plot and save
 plotStartle(tmp,TB,tvec,locs,theta_delta_ratio,Spec,t,fspec,bin_size,Fs)
+if 0 == input('Discard the stimulus? Yes = 1')
+loc_all(:,index_save) = loc_tmp;
+tdr_all(:,index_save)= theta_delta_ratio;
 print(gcf,strcat(outputdir,abfFileName, '_','startle_',num2str(i),'.tif'),'-dtiff');
+index_save = index_save +1;
+end
 close;
 end
 plotAverage(tdr_all,loc_all,TB)
