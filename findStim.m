@@ -6,7 +6,7 @@ sws = slidewindows.*Fs;
 
 for i = 1:length(stim)-max(sws)
     for j = 1:length(sws)
-        if(stim(i)>5 & stim(i+sws(j))>5)
+        if(stim(i)>5 && stim(i+sws(j))>5)
             stim(i:i+sws(j)) = stim(i);
         end
     end

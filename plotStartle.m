@@ -14,7 +14,7 @@ ylabel('mV')
 subplot(4,1,2)
 h = histogram(locs,'BinLimits',[0 range(TB)*Fs],'NumBins',range(TB)./bin_size);        % 10 secs bin size
 bar(h.Values)
-% xlim([0 range(TB)./bin_size])
+xlim([0.5 range(TB)./bin_size]+0.5)
 set(gca,'XTick',[])
 ylabel('Spikes / 10s')
 
