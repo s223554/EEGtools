@@ -22,6 +22,7 @@ stim_loc = findStim( stim,Fs,[0.05 0.1 0.15 0.2]);
 TB = [-120 120];            % Time boundary
 tvec = TB(1):1/Fs:TB(2)-1/Fs;
 eeg_epochs = extractEpoch(filteredEEG,stim_loc,Fs,TB); 
+emg_epochs = extractEpoch(emg,stim_loc,Fs,TB); 
 %% calculate 
 % spikes counting
 minInterval = 0.05*Fs;
@@ -36,6 +37,7 @@ bin_size = 10;          %in sec
 index_save = 1;
 for i = 1:length(stim_loc)
 tmp = eeg_epochs(:,i);
+mtmp = emg_epochs(:,i);
 locs = spikeCount(tmp,minInterval,thresGain);
 % locs = spikeSeek(tmp,minInterval,thresGain);
 h = histogram(locs,'BinLimits',[0 range(TB)*Fs],'NumBins',range(TB)./bin_size);        % 10 secs bin size
@@ -52,7 +54,7 @@ Pdelta = sum(Spec(:,0.5<fspec&fspec<4).^2,2);
 theta_delta_ratio = Ptheta./Pdelta;
 
 % plot and save
-plotStartle(tmp,TB,tvec,locs,theta_delta_ratio,Spec,t,fspec,bin_size,Fs)
+plotStartle(tmp,mtmp,TB,tvec,locs,theta_delta_ratio,Spec,t,fspec,bin_size,Fs)
 if 0 == input('Discard the stimulus? Yes = 1')
 loc_all(:,index_save) = loc_tmp;
 tdr_all(:,index_save)= theta_delta_ratio;
