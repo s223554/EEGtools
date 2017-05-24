@@ -55,7 +55,7 @@ theta_delta_ratio = Ptheta./Pdelta;
 
 % plot and save
 plotStartle(tmp,mtmp,TB,tvec,locs,theta_delta_ratio,Spec,t,fspec,bin_size,Fs)
-if 0 == input('Discard the stimulus? Yes = 1')
+if 1 == input('Save the stimulus? Yes = 1, No = 2')
 loc_all(:,index_save) = loc_tmp;
 tdr_all(:,index_save)= theta_delta_ratio;
 print(gcf,strcat(outputdir,abfFileName, '_','startle_',num2str(i),'.tif'),'-dtiff');

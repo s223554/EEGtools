@@ -24,7 +24,7 @@ xlim([0.5 range(TB)./bin_size]+0.5)
 set(gca,'XTick',[])
 ylabel('Spikes / 10s')
 
-subplot(5,1,3)      % theta/delta
+subplot(5,1,4)      % theta/delta
 Q = size(theta_delta_ratio,1);
 P = range(TB);
 tdr = resample(theta_delta_ratio,P,Q);
@@ -33,7 +33,7 @@ xlim(TB)
 ylim([-1 3])
 ylabel('Theta / Delta')
 
-subplot(5,1,4)
+subplot(5,1,5)
 plot_matrix(Spec,t,fspec);
 colormap('jet');
 caxis([-70 -10]);
