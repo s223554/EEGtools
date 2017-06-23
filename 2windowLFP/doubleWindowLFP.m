@@ -4,7 +4,7 @@ filename = strcat(path,abfFileName);
 [LFP1 LFP2] = readABF2ch(filename,'IN 0','IN 5');  % 1 for left, 2 for right
 outputdir = '.\output\';
 
-Fc = [0.5 40];                          % freq limit
+Fc = [0.5 250];                          % freq limit
 filtered1 = bandPass(LFP1,Fc,Fs);
 filtered2 = bandPass(LFP2,Fc,Fs);
 
@@ -20,13 +20,24 @@ data(:,4) = LFP2(startTime2*Fs:(startTime2+timeInter)*Fs-1);  % right channel be
 
 % params for spectrum calculation.
 params.Fs = Fs;
-params.fpass = [0 40];
+params.fpass = [0 250];
 params.tapers=[3 5];
-movingwin=[10 10];              % moving window and moving steps
+movingwin=[20 20];              % moving window and moving steps
 [Spec,t,fspec]=mtspecgramc(data,movingwin,params);
-PowerDelta = sum(Spec(:,0.5<fspec&fspec<4,:).^2,2);
-PD(:,:) = PowerDelta(:,1,:);
+PowerDelta = sum(Spec(:,1<fspec&fspec<4,:).^2,2);
+PowerSum = sum(Spec.^2,2);
+PrevalenceDelta = PowerDelta./PowerSum;
+PD(:,:) = PrevalenceDelta(:,1,:);
 bar(PD');
 set(gca, 'XTick', [1 2 3 4])
-set(gca, 'XTickLabel', {'left baseline' 'right baseline' 'left fatty acid' 'right fatty acid'})
-xlswrite(strcat(outputdir,abfFileName,'.xlsx'),PD);
+set(gca, 'XTickLabel', {'left baseline' 'right baseline' 'left aCSF' 'right fatty acid'})
+xlswrite(strcat(outputdir,abfFileName,'.xlsx'),PD,1);
+
+% normalize to the left hemisphere.
+scale_factor1 = sum(PD(:,2))./sum(PD(:,1));
+scale_factor2 = sum(PD(:,4))./sum(PD(:,3));
+PowerD(:,:) = PowerDelta(:,1,:);
+normalizedPD = PowerD;
+normalizedPD(:,2) = PD(:,2)/scale_factor1;
+normalizedPD(:,4) = PD(:,4)/scale_factor2;
+xlswrite(strcat(outputdir,abfFileName,'.xlsx'),normalizedPD,2);
