@@ -8,6 +8,7 @@ Fc = [0.5 250];                          % freq limit
 filtered1 = bandPass(LFP1,Fc,Fs);
 filtered2 = bandPass(LFP2,Fc,Fs);
 
+%% start here
 timeInter = 100;        % time interval for analysis.
 startTime1 = input('Time before loading drugs');
 startTime2 = input('Time after loading drugs');
@@ -34,10 +35,11 @@ set(gca, 'XTickLabel', {'left baseline' 'right baseline' 'left aCSF' 'right fatt
 xlswrite(strcat(outputdir,abfFileName,'.xlsx'),PD,1);
 
 % normalize to the left hemisphere.
-scale_factor1 = sum(PD(:,2))./sum(PD(:,1));
-scale_factor2 = sum(PD(:,4))./sum(PD(:,3));
+scale_factor1 = sum(PD(:,3))./sum(PD(:,1)); % aCSF / baseline control side
+scale_factor2 = sum(PD(:,4))./sum(PD(:,2)); 
 PowerD(:,:) = PowerDelta(:,1,:);
 normalizedPD = PowerD;
-normalizedPD(:,2) = PD(:,2)/scale_factor1;
-normalizedPD(:,4) = PD(:,4)/scale_factor2;
-xlswrite(strcat(outputdir,abfFileName,'.xlsx'),normalizedPD,2);
+normalizedPD(:,3) = PowerD(:,3)/scale_factor1;
+normalizedPD(:,4) = PowerD(:,4)/scale_factor1;
+xlswrite(strcat(outputdir,abfFileName,'.xlsx'),PowerD,2);
+xlswrite(strcat(outputdir,abfFileName,'.xlsx'),normalizedPD,3);
