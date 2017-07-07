@@ -2,7 +2,7 @@ Fs = 1000;
 [abfFileName,path] = uigetfile('*.abf');
 filename = strcat(path,abfFileName);
 [LFP1 LFP2] = readABF2ch(filename,'IN 0','IN 5');  % 1 for left, 2 for right
-outputdir = '.\output\';
+outputdir = strcat(pwd,'\output\');
 
 Fc = [0.5 250];                          % freq limit
 filtered1 = bandPass(LFP1,Fc,Fs);
