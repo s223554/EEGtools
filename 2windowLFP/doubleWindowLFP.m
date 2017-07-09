@@ -1,7 +1,7 @@
 Fs = 1000;
 [abfFileName,path] = uigetfile('*.abf');
 filename = strcat(path,abfFileName);
-[LFP1 LFP2] = readABF2ch(filename,'IN 0','IN 5');  % 1 for left, 2 for right
+[LFP1,LFP2] = readABF2ch(filename,'IN 0','IN 5');  % 1 for left, 2 for right
 outputdir = strcat(pwd,'\output\');
 
 Fc = [0.5 250];                          % freq limit
@@ -39,7 +39,7 @@ scale_factor1 = sum(PD(:,3))./sum(PD(:,1)); % aCSF / baseline control side
 scale_factor2 = sum(PD(:,4))./sum(PD(:,2)); 
 PowerD(:,:) = PowerDelta(:,1,:);
 normalizedPD = PowerD;
-normalizedPD(:,3) = PowerD(:,3)/scale_factor1;
+normalizedPD(:,3) = PowerD(:,3)/scale_factor1;  % they all compare with control side
 normalizedPD(:,4) = PowerD(:,4)/scale_factor1;
 xlswrite(strcat(outputdir,abfFileName,'.xlsx'),PowerD,2);
 xlswrite(strcat(outputdir,abfFileName,'.xlsx'),normalizedPD,3);
