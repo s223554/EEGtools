@@ -32,5 +32,5 @@ params.tapers=[3 5];
 [S1,f1] = mtspectrumc(data1,params);
 [S2,f2] = mtspectrumc(data2,params);
 
-fitted_S1 = fitMultiCh(f1',S1,'poly9');
-plotTraceFreq(data1,tvec,f1,S1,fitted_S1,'oleic acid')
+fitted_S2 = fitMultiCh(f2',S2,'poly9');
+plotTraceFreq(data2,tvec,f2,S2,fitted_S2,'oleic acid')
