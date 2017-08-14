@@ -49,6 +49,10 @@ prev_delta = Pdelta./Ptotal;
 locs = peakseek(-eeg_roi,mindist,threshold);
 % locs = spikeSeek(tmp,minInterval,thresGain);
 h = histogram(locs,'BinLimits',[0 range(TB)*Fs],'NumBins',range(TB)./bin_size);        % 10 secs bin size
-locs_data = h.Values; 
+locs_num = h.Values; 
+locs_bin = TB(1):bin_size:TB(2)-1;
+locs_data = [locs_bin' locs_num'];
+stimTime= find(stim_roi>10);
+stimStart = stimTime(1)./Fs+ TB(1);       % in sec
 
 plotScript;
