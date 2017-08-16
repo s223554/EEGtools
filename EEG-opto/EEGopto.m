@@ -54,6 +54,11 @@ locs_bin = TB(1):bin_size:TB(2)-1;
 locs_data = [locs_bin' locs_num'];
 stimTime= find(stim_roi>10);
 stimStart = stimTime(1)./Fs+ TB(1);       % in sec
-disp(stimStart);
+
+% index = 1:10:range(TB); % for indexing theta/delta
+% tdratio = [index'.*10 theta_delta_ratio(index)];
+meantdratio = mean(reshape(theta_delta_ratio,[size(theta_delta_ratio,1)/10 10]),2);
+
+disp(floor(stimStart));
 plotScript;
 
