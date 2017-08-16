@@ -16,5 +16,5 @@ subplot(514)
 bar(theta_delta_ratio);            % the delta raw power.
 xlim([1 size(prev_delta,1)])
 subplot(515)
-bar(locs_data)
+bar(locs_num)
 xlim([0 range(TB)./bin_size])
