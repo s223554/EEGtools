@@ -52,3 +52,4 @@ h = histogram(locs,'BinLimits',[0 range(TB)*Fs],'NumBins',range(TB)./bin_size); 
 locs_data = h.Values; 
 
 plotScript;
+
