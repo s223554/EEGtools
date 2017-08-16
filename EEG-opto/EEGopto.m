@@ -51,13 +51,14 @@ locs = peakseek(-eeg_roi,mindist,threshold);
 h = histogram(locs,'BinLimits',[0 range(TB)*Fs],'NumBins',range(TB)./bin_size);        % 10 secs bin size
 locs_num = h.Values; 
 locs_bin = TB(1):bin_size:TB(2)-1;
-locs_data = [locs_bin' locs_num'];
+
 stimTime= find(stim_roi>10);
 stimStart = stimTime(1)./Fs+ TB(1);       % in sec
 
 % index = 1:10:range(TB); % for indexing theta/delta
 % tdratio = [index'.*10 theta_delta_ratio(index)];
 meantdratio = mean(reshape(theta_delta_ratio,[size(theta_delta_ratio,1)/10 10]),2);
+locs_data = [locs_bin' locs_num' meantdratio];
 
 disp(floor(stimStart));
 plotScript;
