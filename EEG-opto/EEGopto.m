@@ -6,7 +6,7 @@ filename = strcat(path,abfFileName);
 [EEG,EMG,STIM] = readABF(filename,'IN 14','IN 15','IN 12');  % 1 for left, 2 for right , 3 for stimulation5
 outputdir = strcat(pwd,'\output\');
 
-Fc = [0.5 100];                          % freq limit
+Fc = [0.5 60];                          % freq limit
 filteredEEG = bandPass(EEG,Fc,Fs);
 %%
 timeStart = input('Start time (sec)?');       % time interval for analysis, unit = sec.
@@ -60,6 +60,5 @@ stimStart = stimTime(1)./Fs+ TB(1);       % in sec
 meantdratio = mean(reshape(theta_delta_ratio,[size(theta_delta_ratio,1)/10 10]),2);
 locs_data = [locs_bin' locs_num' meantdratio];
 
-disp(floor(stimStart));
 plotScript;
-
+disp(floor(stimStart));
