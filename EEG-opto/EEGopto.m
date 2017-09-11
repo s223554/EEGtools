@@ -10,7 +10,8 @@ Fc = [0.5 100];                          % freq limit
 filteredEEG = bandPass(EEG,Fc,Fs);
 %%
 timeStart = input('Start time (sec)?');       % time interval for analysis, unit = sec.
-timeEnd = input('End time (sec)?'); 
+timeEnd = timeStart + 800;
+% timeEnd = input('End time (sec)?'); 
 tvec = (timeStart+1/Fs:1/Fs:timeEnd);
 % eeg_roi = EEG(timeStart*Fs:(timeEnd)*Fs-1); 
 eeg_roi = filteredEEG(timeStart*Fs:(timeEnd)*Fs-1); 
@@ -56,3 +57,26 @@ stimTime= find(stim_roi>10);
 stimStart = stimTime(1)./Fs+ TB(1);       % in sec
 
 plotScript;
+
+% %% for demo
+% subplot(413)
+% plot(tvec,stim_roi)
+% ylabel('LC activation')
+% xlim([timeStart timeEnd])
+% subplot(412)
+% plot_matrix(Spec,t,fspec);
+% colormap('jet');
+% caxis([-75 -10]);
+% colorbar off;
+% set(gca,'XTick',[])
+% ylabel('Frequency(Hz)')
+% xlabel('Time(s)')
+% subplot(411)
+% plot(tvec,eeg_roi);
+% ylabel('EEG')
+% xlim([timeStart timeEnd])
+% subplot(414)
+% bar(theta_delta_ratio);            % the delta raw power.
+% ylabel('Theta / Delta')
+% ylim([0 10])
+% xlim([1 size(prev_delta,1)])
