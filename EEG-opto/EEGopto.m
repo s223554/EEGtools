@@ -9,8 +9,9 @@ outputdir = strcat(pwd,'\output\');
 Fc = [0.5 100];                          % freq limit
 filteredEEG = bandPass(EEG,Fc,Fs);
 %%
-timeStart = input('Start time (sec)?');       % time interval for analysis, unit = sec.
-timeEnd = timeStart + 800;
+timeStim = input('stimulation time (sec)?');       % time interval for analysis, unit = sec.
+timeStart = timeStim - 400;
+timeEnd = timeStart + 800;              % 
 % timeEnd = input('End time (sec)?'); 
 tvec = (timeStart+1/Fs:1/Fs:timeEnd);
 % eeg_roi = EEG(timeStart*Fs:(timeEnd)*Fs-1); 
@@ -80,7 +81,6 @@ plotScript;
 % ylabel('Theta / Delta')
 % ylim([0 10])
 % xlim([1 size(prev_delta,1)])
-=======
 clear all;
 %% read abf file
 Fs = 2010;
@@ -145,4 +145,3 @@ locs_data = [locs_bin' locs_num' meantdratio];
 
 plotScript;
 disp(floor(stimStart));
->>>>>>> refs/remotes/origin/master
