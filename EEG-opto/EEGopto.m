@@ -57,7 +57,12 @@ locs_data = [locs_bin' locs_num'];
 % stimTime= find(stim_roi>10);
 % stimStart = stimTime(1)./Fs+ TB(1);       % in sec
 
+% check variable locs_data 
+meantdratio = mean(reshape(theta_delta_ratio,[size(theta_delta_ratio,1)/10 10]),2);
+locs_data = [locs_bin' locs_num' meantdratio];
+
 plotScript;
+
 
 % %% for demo
 % subplot(413)
